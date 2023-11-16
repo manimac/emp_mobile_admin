@@ -1,0 +1,30 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Terms And Conditions </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" [formGroup]="formGroup" (ngSubmit)="save()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="required">Description</label>
+                                            <ckeditor formControlName="content" placeholder="Enter Description"></ckeditor>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-gradient-primary mr-2" [disabled]="formGroup.invalid">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Peek Hours </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" [formGroup]="formGroup" (ngSubmit)="save()">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="required">Rent</label>
+                                            <input type="text" class="form-control" id="exampleInputUsername1"
+                                                placeholder="Enter percentage for Rent"
+                                                [ngClass]="{ 'is-invalid': formControls.peekvehicle.touched && formControls.peekvehicle.errors }"
+                                                formControlName="peekvehicle" name="peekvehicle">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required">Staffing</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                                placeholder="Enter percentage for Staffing"
+                                                [ngClass]="{ 'is-invalid': formControls.peekstaffing.touched && formControls.peekstaffing.errors }"
+                                                formControlName="peekstaffing" name="peekstaffing">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required">Transport</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1"
+                                                placeholder="Enter percentage for Transport"
+                                                [ngClass]="{ 'is-invalid': formControls.peektransport.touched && formControls.peektransport.errors }"
+                                                formControlName="peektransport" name="peektransport">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-gradient-primary mr-2" [disabled]="formGroup.invalid">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

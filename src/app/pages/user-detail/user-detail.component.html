@@ -1,0 +1,343 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Users </h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="jezsel-profile-section shadow">
+
+                        <h3>Mijn boekingen</h3>
+                        <!-- <h5>Wallet - {{currentWallet}}</h5> -->
+                        <div class="row mt-3">
+                            <div class="col-lg-12 col-12 align-self-center table-responsive ">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Geboekt op</th>
+                                            <th>Betaalde borg</th>
+                                            <th>Status van betaling</th>
+                                            <th>Meer informatie</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of ordersdataLists;let i= index;">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.createdAt|date:'dd/M/yyyy'}}</td>
+                                            <td><span>&#8364;</span>{{data.total}}</td>
+                                            <td>
+                                                <span *ngIf="data.status == 1"> Succes</span>
+                                                <span *ngIf="data.status == 2"> Mislukt</span>
+                                                <span *ngIf="data.status == 3&&data.paymentLinkstatus!=2"> In
+                                                    behandeling <button
+                                                        class="btn btn-primary ml-2">Betalen</button></span>
+                                                <span *ngIf="data.status == 3&&data.paymentLinkstatus==2"> In
+                                                    behandeling (Betaallink verstuurd naar e-mail)</span>
+                                            </td>
+                                            <td><button class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#myModal" (click)="viewDetails(data)">Zie
+                                                    details</button></td>
+                                        </tr>
+                                        <tr *ngIf="ordersdataLists.length==0">
+                                            <td colspan="5" class="text-center">Geen bestellingen gevonden</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="section mb-5 jezsel-profile-section shadow">
+                        <h3>Wallet</h3>
+                        <div class="jezel-profile-balance-interest-g">
+                            <ul>
+                                <li>
+                                    <div>Saldo</div>
+                                    <div class="jezel-bi-amount">€ {{currentWallet}}</div>
+                                </li>
+                                <li>
+                                    <div>Rente</div>
+                                    <div class="jezel-bi-amount">€ {{currentInterest}}</div>
+                                </li>
+                                <li>
+                                    <div><strong>Totaal</strong></div>
+                                    <div class="jezel-bi-amount"><strong>€ <span
+                                                [innerHtml]="getTotal()"></span></strong></div>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <!-- wallet balance end here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="section mb-5 jezsel-profile-section shadow">
+                        <h3 class="mb-3">Transacties</h3>
+                        <div class="nav nav-pills mt-2 jezsel-profile-wallet-swith" id="v-pills-tab" role="tablist"
+                            aria-orientation="horizontal">
+                            <a class="nav-link active pl-4" id="v-pills-deposit-tab1" data-toggle="pill"
+                                href="#v-pills-deposit1" role="tab" aria-controls="v-pills-deposit1"
+                                aria-selected="false" (click)="showWithdraw1=false;showDeposit1=true;">Opwaarderen</a>
+                            <a class="nav-link pl-4" id="v-pills-withdraw-tab1" data-toggle="pill"
+                                href="#v-pills-withdraw1" role="tab" aria-controls="v-pills-withdraw1"
+                                aria-selected="true" (click)="showWithdraw1=true;showDeposit1=false;">Uitbetalen</a>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-withdraw1" role="tabpanel"
+                            aria-labelledby="v-pills-withdraw-tab1" *ngIf="showWithdraw1">
+                            <div class="section mb-5">
+                                <div class="container">
+                                    <div class="row mt-3">
+                                        <div class="col-lg-12 col-12 align-self-center table-responsive">
+                                        </div>
+                                        <table class="table table-bordered ">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Amount</th>
+                                                    <th>Status</th>
+                                                    <th>Requested On</th>
+                                                    <th>Updated On</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of withdrawdataLists;let i= index;">
+                                                    <td>{{i+1}}</td>
+                                                    <td><span>&#8364;</span>{{data.amount}}</td>
+                                                    <td>
+                                                        <span *ngIf="data.status == 1"> Succes </span>
+                                                        <span *ngIf="data.status == 3"> In behandeling </span>
+                                                        <span *ngIf="data.status == 2"> Mislukt </span>
+                                                    </td>
+                                                    <td>{{data.createdAt|date:'dd/M/yyyy'}}</td>
+                                                    <td>{{data.updatedAt|date:'dd/M/yyyy'}}</td>
+                                                </tr>
+                                                <tr *ngIf="withdrawdataLists.length==0">
+                                                    <td colspan="5" class="text-center">Geen gegevens gevonden</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" id="v-pills-deposit1" role="tabpanel"
+                            aria-labelledby="v-pills-deposit-ta1b" *ngIf="showDeposit1">
+                            <div class="section mb-5">
+                                <div class="row mt-3">
+                                    <div class="col-lg-12 col-12 align-self-center">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Opwaarderen</th>
+                                                        <th>Status van Betaling</th>
+                                                        <th>Gestort op</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of depositdataLists;let i= index;">
+                                                        <td>{{i+1}}</td>
+                                                        <td><span>&#8364;</span>{{data.total}}</td>
+                                                        <td>
+                                                            <span *ngIf="data.status == 1"> Succes</span>
+                                                            <span *ngIf="data.status == 2"> Mislukt</span>
+                                                            <span *ngIf="data.status == 3"> In behandeling <button
+                                                                    class="btn btn-primary ml-2">Betalen</button></span>
+                                                        </td>
+                                                        <td>{{data.createdAt|date:'dd/M/yyyy'}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="depositdataLists.length==0">
+                                                        <td colspan="4" class="text-center">Geen gegevens gevonden
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="section mb-5 jezsel-profile-section shadow" *ngIf="selectedUser">
+                            <h3 class="mt-4">Bedrijfsgegevens</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Type : {{selectedUser.type}}
+                                </div>
+                                <div class="col-md-4">
+                                    Bedrijfsnaam : {{selectedUser.bedrijfsnaam}}
+                                </div>
+                                <div class="col-md-4">
+                                    Kvk : {{selectedUser.kvk}}
+                                </div>
+                                <div class="col-md-4">
+                                    Btwnr : {{selectedUser.btwnr}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Vestigingsadres</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Vesigingstraat : {{selectedUser.vesigingstraat}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesiginghuisnr : {{selectedUser.vesiginghuisnr}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesigingpostcode : {{selectedUser.vesigingpostcode}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesigingplaats : {{selectedUser.vesigingplaats}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesigingland : {{selectedUser.vesigingland}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Factuuradres</h3>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    Factuurstraat : {{selectedUser.factuurstraat}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurhuisnr : {{selectedUser.factuurhuisnr}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurpostcode : {{selectedUser.factuurpostcode}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurplaats : {{selectedUser.factuurplaats}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurland : {{selectedUser.factuurland}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Contact details</h3>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    Aanhef : {{selectedUser.aanhef}}
+                                </div>
+                                <div class="col-md-4">
+                                    Voornaam : {{selectedUser.voornaam}}
+                                </div>
+                                <div class="col-md-4">
+                                    Achternaam : {{selectedUser.achternaam}}
+                                </div>
+                                <div class="col-md-4">
+                                    Tussenvoegsel : {{selectedUser.tussenvoegsel}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuuremail : {{selectedUser.factuuremail}}
+                                </div>
+                                <div class="col-md-4">
+                                    Telefoonnr : {{selectedUser.telefoonnr}}
+                                </div>
+                            </div>
+                            <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Zie boekingsdetails</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" data-dismiss="modal">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body jezsel-profile-myord-pp">
+                <div class="container profile-popup-content table-responsive pb-4">
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>dienst</th>
+                                <th>Type</th>
+                                <th>Prijs</th>
+                                <th>Aanvang</th>
+                                <th>Einde</th>
+                                <th>Extra’s</th>
+                                <th>Cancel Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of selectedProduct;let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{order.name}}</td>
+                                <td [innerHtml]="getType(order.type)">{{order.type}}</td>
+                                <td><span>&#8364;</span>{{order.price}}</td>
+                                <td>{{order.checkindate|date:'dd/M/yyyy'}} {{order.checkintime}}</td>
+                                <td>{{order.checkoutdate|date:'dd/M/yyyy'}} {{order.checkouttime}}</td>
+                                <td>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Naam</th>
+                                                <th>Prijs</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let extras of order.extras">
+                                                <td>{{extras.extraName}}</td>
+                                                <td><span>&#8364;</span>{{extras.price}}</td>
+                                            </tr>
+                                            <tr *ngIf="order&&order.extras&&order.extras.length==0">
+                                                <td colspan="2">No Extras Found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <span
+                                        class="text-danger" *ngIf="order.status==0">Annuleren</span></td>
+                            </tr>
+                            <tr *ngIf="selectedProduct && selectedProduct.length==0">
+                                <td colspan="7" class="text-center">Geen gegevens gevonden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
+    </div>
+</div>

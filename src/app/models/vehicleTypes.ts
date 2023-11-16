@@ -1,0 +1,1 @@
+export const types =  ['Rent', 'Staffing', 'Transport'];

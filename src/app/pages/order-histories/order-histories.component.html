@@ -1,0 +1,272 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Order Histories </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="showDetails">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Service</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Checkin</th>
+                                        <th>Checkout</th>
+                                        <th>Extras</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let order of selectedProduct;let i = index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{order.name}}</td>
+                                        <td>{{order.type}}</td>
+                                        <td><span>&#8364;</span>{{order.price}}</td>
+                                        <td>{{order.checkindate|date:'mediumDate'}} {{order.checkintime}}</td>
+                                        <td>{{order.checkoutdate|date:'mediumDate'}} {{order.checkouttime}}</td>
+                                        <td>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let extras of order.extras">
+                                                        <td>{{extras.extraName}}</td>
+                                                        <td><span>&#8364;</span>{{extras.price}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="order.extras.length==0">
+                                                        <td colspan="2">No Extras Found</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td><button class="btn btn-primary" (click)="cancelOrder(order)"
+                                                *ngIf="order.status!=0">Cancel</button><span class="text-danger"
+                                                *ngIf="order.status==0">Canceled</span></td>
+                                    </tr>
+                                    <tr *ngIf="selectedProduct.length==0">
+                                        <td colspan="7" class="text-center">No Records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <div class="row" *ngFor="let order of selectedProduct.Orderhistories;let i = index;">
+                                <div class="col-md-12">
+                                    <h5>{{order.name}} | {{order.type}}</h5>
+                                </div>
+                                <div class="row mt-4 m-0">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Price</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span>{{order.price}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Checkin Date</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span>{{order.checkindate|date:'mediumDate'}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Checkin Time</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span>{{order.checkintime}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Checkout Date</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span>{{order.checkoutdate|date:'mediumDate'}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Checkout Time</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span>{{order.checkouttime}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <hr>
+                            <h3 class="mt-4">Bedrijfsgegevens</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Type : {{selectedUser.type}}
+                                </div>
+                                <div class="col-md-4">
+                                    Bedrijfsnaam : {{selectedUser.bedrijfsnaam}}
+                                </div>
+                                <div class="col-md-4">
+                                    Kvk : {{selectedUser.kvk}}
+                                </div>
+                                <div class="col-md-4">
+                                    Btwnr : {{selectedUser.btwnr}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Vestigingsadres</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Vesigingstraat : {{selectedUser.vesigingstraat}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesiginghuisnr : {{selectedUser.vesiginghuisnr}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesigingpostcode : {{selectedUser.vesigingpostcode}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesigingplaats : {{selectedUser.vesigingplaats}}
+                                </div>
+                                <div class="col-md-4">
+                                    Vesigingland : {{selectedUser.vesigingland}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Factuuradres</h3>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    Factuurstraat : {{selectedUser.factuurstraat}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurhuisnr : {{selectedUser.factuurhuisnr}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurpostcode : {{selectedUser.factuurpostcode}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurplaats : {{selectedUser.factuurplaats}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuurland : {{selectedUser.factuurland}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Contact details</h3>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    Aanhef : {{selectedUser.aanhef}}
+                                </div>
+                                <div class="col-md-4">
+                                    Voornaam : {{selectedUser.voornaam}}
+                                </div>
+                                <div class="col-md-4">
+                                    Achternaam : {{selectedUser.achternaam}}
+                                </div>
+                                <div class="col-md-4">
+                                    Tussenvoegsel : {{selectedUser.tussenvoegsel}}
+                                </div>
+                                <div class="col-md-4">
+                                    Factuuremail : {{selectedUser.factuuremail}}
+                                </div>
+                                <div class="col-md-4">
+                                    Telefoonnr : {{selectedUser.telefoonnr}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">Bestuurdersgegevens</h3>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    Voornaam : {{selectedOrder.driverFirstName}}
+                                </div>
+                                <div class="col-md-4">
+                                    Achternaam : {{selectedOrder.driverLastName}}
+                                </div>
+                                <div class="col-md-4">
+                                    E-mail : {{selectedOrder.driverEmail}}
+                                </div>
+                                <div class="col-md-4">
+                                    Mobiele nummer : {{selectedOrder.driverPhone}}
+                                </div>
+                                <div class="col-md-4">
+                                    Adres : {{selectedOrder.driverAddress}}
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-12">
+                                    License : <img [src]="getImage(selectedOrder.driverlicense)" *ngIf="selectedOrder.driverlicense" style="width: 250px;height: 250px;">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mt-2">
+                                <div class="col-md-4">
+                                    <button class="btn btn-light" (click)="cancel()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search Order Id" [(ngModel)]="searchKey">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Order Id</th>
+                                <th> Services </th>
+                                <th> Booked On </th>
+                                <th> User </th>
+                                <th> Amount </th>
+                                <th> View </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of dataLists|filterOrderId: searchKey;let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.id}}</td>
+                                <td *ngIf="data.type!='wallet'">{{data.services}}</td>
+                                <td *ngIf="data.type=='wallet'">Deposit - {{data.User ? data.User.firstname : ''}}</td>
+                                <td>{{data.updatedAt|date:'mediumDate'}}</td>
+                                <td>{{data.User.firstname}}</td>
+                                <td>{{data.amountpaid}}</td>
+                                <td><i class="fa fa-eye" (click)="viewDetails(data)" *ngIf="data.type!='wallet'"></i> <i class="fa fa-inbox text-danger ml-3" *ngIf="data.isreaded==0"></i>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataLists.length==0">
+                                <td colspan="6" class="text-center">No records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

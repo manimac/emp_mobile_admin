@@ -1,0 +1,142 @@
+<!-- <div class="content-wrapper" #form>
+    <div class="page-header">
+        <h3 class="page-title"> Locations </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" [formGroup]="formGroup">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="required">Description</label>
+                                            <ckeditor formControlName="content" placeholder="Enter Description"></ckeditor>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </form>
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-primary pull-right" (click)="create(form)">Add Location</button>
+                                </div>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th> # </th>
+                                        <th> Location </th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataLists;let i = index;">
+                                        <td>{{i+1}}</td>
+                                        <td><input type="text" class="form-control" [value]="data" placeholder="Enter the location URL" (change)="updateLocation(i, $event)"></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-default" (click)="deleteElement(i)">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="dataLists.length==0">
+                                        <td colspan="5" class="text-center">No records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row mt-4">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-gradient-primary mr-2" [disabled]="formGroup.invalid" (click)="save()">Update</button>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="content-wrapper" #form>
+    <div class="page-header">
+        <h3 class="page-title"> Locations </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="showForm">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" [formGroup]="formGroup" (ngSubmit)="save()">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="required">Location url</label>
+                                            <input type="text" class="form-control" placeholder="Enter Price"
+                                                formControlName="iframes" autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required">Address</label>
+                                            <textarea type="text" class="form-control" placeholder="Enter Description"
+                                                formControlName="content" autocomplete="off"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-gradient-primary mr-2"
+                                            [disabled]="formGroup.invalid">Submit</button>
+                                        <button class="btn btn-light" (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-lg-12">
+                            <button class="btn btn-primary pull-right" (click)="create(form)">Create</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;"> # </th>
+                                <th style="width: 30%;"> Location url </th>
+                                <th style="width: 30%;"> Address </th>
+                                <th style="width: 30%;"> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of dataLists;let i = index;">
+                                <td style="width: 10%;">{{i+1}}</td>
+                                <td class="word-wrap">{{data.iframes}}</td>
+                                <td class="word-wrap">{{data.content}}</td>
+                                <td style="width: 30%;">
+                                    <button class="btn btn-sm btn-default" (click)="viewElement(data, form)">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-default" (click)="deleteElement(data.id)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataLists.length==0">
+                                <td colspan="5" class="text-center">No records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

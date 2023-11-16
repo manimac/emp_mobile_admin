@@ -1,0 +1,110 @@
+<div class="content-wrapper" #form>
+    <div class="page-header">
+        <h3 class="page-title"> Maintenance </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="showForm">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" (ngSubmit)="save()">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Product name</label>
+                                            <select class="form-control" [(ngModel)]="productId" name="productId">
+                                                <option value="">Select Type</option>
+                                                <option *ngFor="let type of productLists" value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group"> 
+                                            <label>Checkin Date</label>
+                                            <span class="far fa-calendar-alt"></span>
+                                            <input class="form-control" type="date" [(ngModel)]="checkinDate" name="checkinDate" (change)="setCheckoutDate()" [attr.min]='minDate'>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Checkin Time</label>
+                                            <select class="form-control" placeholder="check-in Time" [(ngModel)]="checkintime" (change)="changeCheckin()" name="checkintime">
+                                                <option value="">check-in Time</option>
+                                                <option *ngFor="let x of slots" [disabled]="checkinDisabled(x)" value="{{x}}">{{x}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group"> 
+                                            <label>Checkout Date</label>
+                                            <span class="far fa-calendar-alt"></span>
+                                            <input class="form-control" type="date" [(ngModel)]="checkoutDate" name="checkoutDate" [attr.min]='checkinDate'>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Checkout Time</label>
+                                            <select class="form-control" placeholder="check-out Time"
+                                            [(ngModel)]="checkouttime" name="checkouttime">
+                                                <option value="">check-out Time</option>
+                                                <option *ngFor="let x of slots" [disabled]="checkoutDisabled(x)" value="{{x}}">{{x}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-gradient-primary mr-2"
+                                            [disabled]="!productId||!checkinDate||!checkintime||!checkoutDate||!checkouttime">Submit</button>
+                                        <button class="btn btn-light" (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-lg-12">
+                            <button class="btn btn-primary pull-right" (click)="create(form)">Create</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Name </th>
+                                <th> Date </th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of dataLists|loadServices:'services';let i = index;">
+                                <td>{{i+1}}</td>
+                                <td *ngIf="data.Orderhistories&&data.Orderhistories.length>0">{{data.Orderhistories[0].name}}</td>
+                                <td *ngIf="data.Orderhistories&&data.Orderhistories.length>0"><span [innerHtml]="splitDate(data.Orderhistories[0].checkindate)"></span> {{data.Orderhistories[0].checkintime}} - <span [innerHtml]="splitDate(data.Orderhistories[0].checkoutdate)"></span> {{data.Orderhistories[0].checkouttime}}</td>
+                                <td>
+                                    <!-- <button class="btn btn-sm btn-default" (click)="viewElement(data, form)">
+                                        <i class="fa fa-edit"></i>
+                                    </button> -->
+                                    <button class="btn btn-sm btn-default" (click)="deleteElement(data.id)" *ngIf="(isAdmin)||(userRole == 'All')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataLists.length==0">
+                                <td colspan="4" class="text-center">No records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

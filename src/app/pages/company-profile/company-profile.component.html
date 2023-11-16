@@ -1,0 +1,86 @@
+<div class="content-wrapper" #form>
+  <div class="page-header">
+    <h3 class="page-title"> Company Profile </h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <form class="pt-3" [formGroup]="employerFormGroup" (ngSubmit)="submitEmployer()">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Company Logo</label>
+                      <input type="file" class="form-control" placeholder="Company Logo"
+                        (change)="onFileChange($event,'logo')">
+                    <!-- <div class="upload-container">
+                      <div class="upload-icon">
+                          <label for="file-input">
+                              <img src="assets/images/upload.png" alt="Upload Icon">
+                          </label>
+                          <input type="file" class="form-control" placeholder="Company Logo"
+                        (change)="onFileChange($event,'logo')" style="display: none;">
+                      </div>
+                      <div class="upload-text">
+                          Upload File
+                      </div>
+                  </div> -->
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Cover Photo</label>
+                      <input type="file" class="form-control" placeholder="Cover Photo"
+                        (change)="onFileChange($event,'cover')">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Company Name</label>
+                      <input type="text" class="form-control form-control-lg" placeholder="Enter Company Name"
+                        formControlName="companyname">
+                    </div>
+                  </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Description</label>
+                      <textarea class="form-control" placeholder="Description" formControlName="description">
+                                    </textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Website</label>
+                      <input type="text" class="form-control" placeholder="Website" formControlName="website">
+                    </div>
+                  </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>KVK-Number</label>
+                      <input type="text" class="form-control" placeholder="KVK" formControlName="kvk">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>BTW-Number</label>
+                      <input type="text" class="form-control" placeholder="BTW" formControlName="btw">
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
+                    [disabled]="employerFormGroup.invalid">Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

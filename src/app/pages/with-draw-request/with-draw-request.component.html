@@ -1,0 +1,55 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Withdraw Requests </h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Name </th>
+                                <th> Amount </th>
+                                <th> Naam </th>
+                                <th> Rekeningnummer(IBAN) </th>
+                                <th> Status </th>
+                                <th> Requested On </th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of dataLists;let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.User?data.User.firstname: ''}}</td>
+                                <td>{{data.amount}}</td>
+                                <td>{{data.naam}}</td>
+                                <td>{{data.rekeningnummer}}</td>
+                                <td>
+                                    <span *ngIf="data.status == 1"> Accepted </span>
+                                    <span *ngIf="data.status == 3"> In Progress </span>
+                                    <span *ngIf="data.status == 2"> Rejected </span>
+                                </td>
+                                <td>{{data.createdAt|date:'mediumDate'}}</td>
+                                <td>
+                                    <button class="btn btn-success" (click)="updateStatus(data.id, 1, data.User)" *ngIf="data.status != 1">Accept</button>
+                                    <button class="btn btn-warning" [ngClass]="{'ml-4': data.status != 1}" (click)="updateStatus(data.id, 3, data.User)" *ngIf="data.status != 3">In
+                                        Progress</button>
+                                    <button class="btn btn-primary ml-4"
+                                        (click)="updateStatus(data.id, 2, data.User)" *ngIf="data.status != 2">Reject</button>
+                                        <a class="btn btn-sm btn-default" data-toggle="tooltip" title="View" (click)="navigatWithdraw(data.id)">
+                                            <i class="fa fa-eye"></i> <i class="fa fa-inbox text-danger ml-3" *ngIf="data.isreaded==0"></i>
+                                        </a>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataLists.length==0">
+                                <td colspan="5" class="text-center">No records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

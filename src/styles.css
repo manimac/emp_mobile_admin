@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+
+.dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: #ED1C24;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:active,  .btn-gradient-primary:not([disabled]):not(.disabled):active, .btn-gradient-primary:not([disabled]):not(.disabled).active, .show > .btn-gradient-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #c6252b;
+    background: #c6252b;
+    border-color: #c6252b;
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item i:hover {
+    color: #ffffff !important;
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-toggle:after {
+    color: inherit !important;
+    font-size: 1rem;
+}
+
+.btn-gradient-primary {
+    background: linear-gradient(to right, #862428, #ed1c24);
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
+.main-panel{
+    position: relative;
+    background: #f2edf3;
+}
+app-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+select.form-control {
+    color: #495057 !important;
+}
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item .nav-link{
+    margin-right: 4.5rem !important;
+}
+.fa-eye{
+    cursor: pointer;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

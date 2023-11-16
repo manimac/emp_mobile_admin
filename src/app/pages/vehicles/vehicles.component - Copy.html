@@ -1,0 +1,283 @@
+<div class="content-wrapper" #form>
+    <div class="page-header">
+        <h3 class="page-title"> Services </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="showForm">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" [formGroup]="formGroup" (ngSubmit)="save()">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <select class="form-control" formControlName="type" (change)="showFilter()">
+                                                <option value="">Select Type</option>
+                                                <option *ngFor="let type of vehicleTypes" value="{{type}}">{{type}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter Name"
+                                                formControlName="name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Price per Hour</label>
+                                            <input type="text" class="form-control" placeholder="Enter Price per Hour"
+                                                formControlName="priceperhr">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <select class="form-control" formControlName="location_id">
+                                                <option value="">Select Location</option>
+                                                <option
+                                                    *ngFor="let location of locations"
+                                                    value="{{location.id}}">{{location.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Short Description</label>
+                                            <ckeditor placeholder="Enter Description"
+                                                formControlName="shortdescription">
+                                            </ckeditor>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <ckeditor placeholder="Enter Description" formControlName="description">
+                                            </ckeditor>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Rent'">
+                                        <div class="form-group">
+                                            <label>Vehicles</label>
+                                            <select class="form-control" formControlName="vehicle">
+                                                <option value="">Select Vehicles</option>
+                                                <option
+                                                    *ngFor="let type of vehicleFilers | categoryfilter:{category:'Vehicles'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Rent'">
+                                        <div class="form-group">
+                                            <label>Fuel</label>
+                                            <select class="form-control" formControlName="fuel">
+                                                <option value="">Select Fuel</option>
+                                                <option
+                                                    *ngFor="let type of vehicleFilers | categoryfilter:{category:'Fuel'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Rent'">
+                                        <div class="form-group">
+                                            <label>Transmission</label>
+                                            <select class="form-control" formControlName="transmission">
+                                                <option value="">Select Transmission</option>
+                                                <option
+                                                    *ngFor="let type of vehicleFilers | categoryfilter:{category:'Transmission'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Rent'">
+                                        <div class="form-group">
+                                            <label>Parking space</label>
+                                            <select class="form-control" formControlName="parkingspace">
+                                                <option value="">Select Parking space</option>
+                                                <option
+                                                    *ngFor="let type of vehicleFilers | categoryfilter:{category:'Parking space'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Rent'">
+                                        <div class="form-group">
+                                            <label>Storage space</label>
+                                            <select class="form-control" formControlName="storagespace">
+                                                <option value="">Select Storage space</option>
+                                                <option
+                                                    *ngFor="let type of vehicleFilers | categoryfilter:{category:'Storage space'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Staffing'">
+                                        <div class="form-group">
+                                            <label>Beroep</label>
+                                            <select class="form-control" formControlName="beroep">
+                                                <option value="">Select Beroep</option>
+                                                <option
+                                                    *ngFor="let type of staffFilers | categoryfilter:{category:'Beroep'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Staffing'">
+                                        <div class="form-group">
+                                            <label>Leeftijd</label>
+                                            <select class="form-control" formControlName="leeftijd">
+                                                <option value="">Select Leeftijd</option>
+                                                <option
+                                                    *ngFor="let type of staffFilers | categoryfilter:{category:'Leeftijd'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Staffing'">
+                                        <div class="form-group">
+                                            <label>Ervaring</label>
+                                            <select class="form-control" formControlName="ervaring">
+                                                <option value="">Select Ervaring</option>
+                                                <option
+                                                    *ngFor="let type of staffFilers | categoryfilter:{category:'Ervaring'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Staffing'">
+                                        <div class="form-group">
+                                            <label>Nationality</label>
+                                            <select class="form-control" formControlName="nationality">
+                                                <option value="">Select Nationality</option>
+                                                <option
+                                                    *ngFor="let type of staffFilers | categoryfilter:{category:'Nationality'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Transport'">
+                                        <div class="form-group">
+                                            <label>Voertuig</label>
+                                            <select class="form-control" formControlName="voertuig">
+                                                <option value="">Select Voertuig</option>
+                                                <option
+                                                    *ngFor="let type of transportFilers | categoryfilter:{category:'Voertuig'}"
+                                                    value="{{type.id}}">{{type.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <label class="form-check-label" for="exampleCheck1">Status</label>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formControls.type.value=='Staffing'">
+                                        <div class="form-group">
+                                            <label>Available days</label>
+                                            <input type="number" class="form-control" placeholder="Available days"
+                                                formControlName="availabledays">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Thumbnail</label>
+                                            <input type="file" class="form-control" #thumbnail
+                                                (change)="onThumbnailChange(thumbnail.files)">
+                                        </div>
+                                        <img [src]="selectedRow.path + selectedRow.thumbnail" width="100"
+                                            *ngIf="selectedRow && selectedRow.thumbnail">
+                                            <div>Thumbnail</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Images</label>
+                                            <input type="file" class="form-control" multiple
+                                                (change)="onImageChange($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-2" *ngFor="let x of selectedRow.Productimages; let i = index">
+                                        <img [src]="x.path + x.image" class="image-preview">
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            (click)="deleteImage(x.id,i)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <div>Image {{i+1}}</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-gradient-primary mr-2"
+                                            [disabled]="formGroup.invalid">Submit</button>
+                                        <button class="btn btn-light" (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-lg-12">
+                            <button class="btn btn-primary pull-right" (click)="create(form)">Create</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Name </th>
+                                <th> Type </th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of dataLists|loadServices:'services';let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.type}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-default" (click)="viewElement(data, form)">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-default" (click)="deleteElement(data.id)" *ngIf="(isAdmin)||(userRole == 'All')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataLists.length==0">
+                                <td colspan="4" class="text-center">No records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

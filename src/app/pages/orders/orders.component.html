@@ -1,0 +1,258 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Orders </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="showDetails">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form [formGroup]="orderFormGroup" (ngSubmit)="submitOrder()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Title</label>
+                                            <input type="text" class="form-control" placeholder="Title"
+                                                formControlName="title">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea class="form-control" placeholder="Description"
+                                                formControlName="description">
+                                          </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Industry</label>
+                                            <select class="form-control" placeholder="Category"
+                                                formControlName="category_id">
+                                                <option value="" disabled>Select</option>
+                                                <option value="{{data.id}}" *ngFor="let data of categoryLists">
+                                                    {{data.title}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Function</label>
+                                            <select class="form-control" placeholder="Function"
+                                                formControlName="function">
+                                                <option value="">Select</option>
+                                                <option value="option 1">option 1</option>
+                                                <option value="option 2">option 2</option>
+                                                <option value="option 3">option 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Cancel period</label>
+                                            <select class="form-control" placeholder="Cancel period"
+                                                formControlName="cancelperiod">
+                                                <option value="">Select</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <mat-calendar [selected]="range" [comparisonStart]="range.start"
+                                                    [comparisonEnd]="range.end"
+                                                    (selectedChange)="onChange($event)"></mat-calendar>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Work</label>
+                                                            <input type="time" class="form-control"
+                                                                placeholder="From time - HH:mm"
+                                                                formControlName="worktime">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Location</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Location" formControlName="location">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Break</label>
+                                                            <input type="time" class="form-control"
+                                                                placeholder="Work time - HH:mm"
+                                                                formControlName="worktime">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Contact Person</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Contact" formControlName="contact">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Rate</label>
+                                                            <input type="text" class="form-control" placeholder="Rate"
+                                                                formControlName="rate">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Time Controller</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Time Controller"
+                                                                formControlName="timecontroller">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Freelancers / Temporary worker</label>
+                                                            <select class="form-control" placeholder="Work type"
+                                                                formControlName="worktype">
+                                                                <option value="">Select</option>
+                                                                <option value="Freelancers">Freelancers</option>
+                                                                <option value="Temporary worker">Temporary worker
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-gradient-primary"
+                                    [disabled]="orderFormGroup.invalid">
+                                    Submit
+                                </button>
+                                <button type="submit" class="btn btn-gradient-primary ml-3" (click)="cancel()">
+                                    Cancel
+                                </button><br><br><br><br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th> # </th>
+                                        <th> Order Id</th>
+                                        <th> Title </th>
+                                        <th> Rate </th>
+                                        <th> Status </th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataLists|filterOrderId: searchKey;let i = index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.rate}}</td>
+                                        <td [innerHtml]="getStatus(data)"></td>
+                                        <td><i class="fa fa-pencil ml-3" (click)="viewDetails(data)"
+                                                *ngIf="data.status==1"></i> <i class="fa fa-trash ml-3"
+                                                (click)="delete(data.id)" *ngIf="data.status==1"></i></td>
+                                    </tr>
+                                    <tr *ngIf="dataLists.length==0">
+                                        <td colspan="6" class="text-center">No records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <mat-tab-group preserveContent>
+                                <mat-tab label="First">
+                                    <div class="col-lg-4 mt-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Search Order Id"
+                                                [(ngModel)]="searchKey">
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th> # </th>
+                                                <th> Order Id</th>
+                                                <th> Title </th>
+                                                <th> Rate </th>
+                                                <th> Status </th>
+                                                <th> Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of dataLists|filterOrderId: searchKey;let i = index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.id}}</td>
+                                                <td>{{data.title}}</td>
+                                                <td>{{data.rate}}</td>
+                                                <td [innerHtml]="getStatus(data)"></td>
+                                                <td><i class="fa fa-pencil ml-3" (click)="viewDetails(data)"
+                                                        *ngIf="data.status==1"></i> <i class="fa fa-trash ml-3"
+                                                        (click)="delete(data.id)" *ngIf="data.status==1"></i></td>
+                                            </tr>
+                                            <tr *ngIf="dataLists.length==0">
+                                                <td colspan="6" class="text-center">No records found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </mat-tab>
+                                <mat-tab label="Second">
+
+                                    <div class="col-lg-4 mt-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Search Order Id"
+                                                [(ngModel)]="searchKey">
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th> # </th>
+                                                <th> Order Id</th>
+                                                <th> Title </th>
+                                                <th> Rate </th>
+                                                <th> Status </th>
+                                                <th> Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of dataLists|filterOrderId: searchKey;let i = index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.id}}</td>
+                                                <td>{{data.title}}</td>
+                                                <td>{{data.rate}}</td>
+                                                <td [innerHtml]="getStatus(data)"></td>
+                                                <td><i class="fa fa-pencil ml-3" (click)="viewDetails(data)"
+                                                        *ngIf="data.status==1"></i> <i class="fa fa-trash ml-3"
+                                                        (click)="delete(data.id)" *ngIf="data.status==1"></i></td>
+                                            </tr>
+                                            <tr *ngIf="dataLists.length==0">
+                                                <td colspan="6" class="text-center">No records found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </mat-tab>
+                            </mat-tab-group> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
