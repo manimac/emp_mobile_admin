@@ -23,6 +23,7 @@
     "@fullcalendar/angular": "^6.1.9",
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
     "angular-material-event-calendar": "^0.1.4",
     "ckeditor4-angular": "^2.2.2",
     "ngx-toastr": "^14.2.0",
