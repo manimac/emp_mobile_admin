@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  baseurl: 'http://localhost:8080/jezsel/',
-  // baseurl: 'https://jezsel.nl/mobileapp/',
-  authurl: 'http://localhost:808/jezsel/api/',
-  // authurl: 'https://jezsel.nl/mobileapp/api/',
+  // baseurl: 'http://localhost:8080/jezsel/',
+  // authurl: 'http://localhost:808/jezsel/api/',
+  baseurl: 'https://jezsel.nl/mobileapp/',
+  authurl: 'https://jezsel.nl/mobileapp/api/',
 };
 
 /*

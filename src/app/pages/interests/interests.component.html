@@ -22,135 +22,76 @@
                             *ngIf="selectedOrder && selectedOrder.staffOrTransportRequest && selectedOrder.Employee">
                             <h4>Assignment Details</h4>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Category</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.Category?.title}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Title</label>
                                         <div>{{selectedOrder.staffOrTransportRequest.title}}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Description</label>
                                         <div>{{selectedOrder.staffOrTransportRequest.description}}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.Category?.title}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Function</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.function}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Cancel Period</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.cancelperiod}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Work date</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.workstartdate}} {{selectedOrder.staffOrTransportRequest.worktime}} - {{selectedOrder.staffOrTransportRequest.workenddate}} {{selectedOrder.staffOrTransportRequest.worktime}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Break</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.fromtime}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Contact Person</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.contact}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Rate</label>
                                         <div>{{selectedOrder.staffOrTransportRequest.rate}}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Industry</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.industry}}</div>
+                                        <label>Time Controller</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.timecontroller}}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Work type</label>
+                                        <label>Freelancers / Temporary worker</label>
                                         <div>{{selectedOrder.staffOrTransportRequest.worktype}}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Type of Goods</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.typeofgoods}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Location</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.location}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Weight</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.weight}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Length</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.length}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Vehicle type</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.vechicletype}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Packaging</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.packaging}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Certificate</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.certificate}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Equipment</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.equipment}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Contact</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.contact}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Cancel period</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.cancelperiod}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>From date</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.from | date:'dd-MM-YYYY'}}
-                                            {{selectedOrder.staffOrTransportRequest.fromtime}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>To date</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.to | date:'dd-MM-YYYY'}}
-                                            {{selectedOrder.staffOrTransportRequest.totime}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Work date</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.workdate | date:'dd-MM-YYYY'}}
-                                            {{selectedOrder.staffOrTransportRequest.worktime}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Loading date</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.loadingdate | date:'dd-MM-YYYY'}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Unloading date</label>
-                                        <div>{{selectedOrder.staffOrTransportRequest.unloadingdate | date:'dd-MM-YYYY'}}
-                                        </div>
+                                        <label>Staff Needed</label>
+                                        <div>{{selectedOrder.staffOrTransportRequest.staffneeded}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -236,19 +177,45 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-3" *ngIf="selectedOrder.status==1">
+                                <div class="col-md-3 mt-2">
                                     <div class="form-group">
                                         <label>Assignment Status</label>
                                         <select class="form-control" [(ngModel)]="assignmentStatus">
-                                            <option value="1" disabled>Select</option>
-                                            <option value="2">Accept</option>
+                                            <option value="" disabled>Select</option>
+                                            <option value="1">Pending</option>
+                                            <option value="2">Accept(Inprogress)</option>
+                                            <option value="3">Completed</option>
                                             <option value="0">Reject</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-9"></div>
-                                <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th> # </th>
+                                                <th> Date</th>
+                                                <th> Hours Worked </th>
+                                                <th> Break Hours </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let history of selectedOrder.staffOrTransportRequest?.staffOrTransportWorkingHistories|filterOrderId: searchKey;let i = index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{history.date | date: 'dd-MM-yyyy'}}</td>
+                                                <td>{{history.hoursWorked}}</td>
+                                                <td>{{history.breakhours}}</td>
+                                            </tr>
+                                            <tr *ngIf="dataLists.length==0">
+                                                <td colspan="6" class="text-center">No records found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 mt-2">
                                     <button class="btn btn-gradient-primary" (click)="submitOrder()">Update</button>
+                                    <button class="btn btn-gradient-info ml-2" (click)="cancel()">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +253,7 @@
                                 <td>{{data?.staffOrTransportRequest?.title}}</td>
                                 <td>{{data?.staffOrTransportRequest?.rate}}</td>
                                 <td [innerHtml]="getStatus(data)"></td>
-                                <td><i class="fa fa-eye ml-3" (click)="viewDetails(data)" *ngIf="data.status==1"></i>
+                                <td><i class="fa fa-eye ml-3" (click)="viewDetails(data)"></i>
                                 </td>
                             </tr>
                             <tr *ngIf="dataLists.length==0">

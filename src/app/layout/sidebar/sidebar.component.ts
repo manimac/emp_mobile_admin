@@ -48,12 +48,12 @@ export class SidebarComponent implements OnInit {
         label: 'Invoice',
         route: '/invoice',
         icon: 'mdi-cart'
+      },
+      {
+        label: 'Interests',
+        route: '/interests',
+        icon: 'mdi-information'
       }
-      // {
-      //   label: 'Interests',
-      //   route: '/interests',
-      //   icon: 'mdi-information'
-      // }
     ];
   }
 

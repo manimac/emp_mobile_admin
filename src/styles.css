@@ -50,3 +50,6 @@ select.form-control {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.fc-dayGridMonth-button, .fc-listWeek-button, .fc-timeGridWeek-button, .fc-timeGridDay-button{
+    display: none !important;
+}

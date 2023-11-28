@@ -121,9 +121,12 @@ export class InterestsComponent implements OnInit {
       status = 'Rejected';
     }
     else if(data.status == 1){
-      status = 'Inprogress';
+      status = 'Pending';
     }
     else if(data.status == 2){
+      status = 'Inprogress';
+    }
+    else if(data.status == 3){
       status = 'Completed';
     }
     return status;

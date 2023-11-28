@@ -16,8 +16,10 @@ declare var $: any;
 })
 export class CalendarComponent implements OnInit {
   Events: any[] = [
-    { title: 'Meeting', start: '2023-11-15', end: '2023-11-20' }
+    { title: 'Meeting', start: '2023-11-15', end: '2023-11-20', classNames: ['event-class1'] }
   ];
+  selectedEvent: any = {};
+  selectedEventTitle: any = null;
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
@@ -31,13 +33,23 @@ export class CalendarComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    // eventClick: this.onDateClick.bind(this),
-    dateClick: this.onDateClick.bind(this),
+    eventClick: this.onDateClick.bind(this),
+    // dateClick: this.onDateClick.bind(this),
   };
   onDateClick(res: any) {
     console.log(res);
-    $('#myModal').modal('show');
+    this.selectedEvent = {};
+    this.selectedEventTitle = null;
+    if(res.event && res.event.extendedProps){
+      this.selectedEvent = res.event.extendedProps;
+      this.selectedEventTitle = res.event.title;
+      $('#myModal').modal('show');
+    }
     // alert('Clicked on event : ' + res.event.title + " " + res.event.extendedProps.workdate);
+  }
+
+  cancel(){
+    this.selectedEvent = {};
   }
   ngOnInit() {
     setTimeout(() => {
@@ -60,9 +72,11 @@ export class CalendarComponent implements OnInit {
       (response: any) => {
         if (response && Array.isArray(response) && response.length > 0) {
           response.forEach((el: any) => {
-            el.start = el.workdate;
+            el.start = el.workstartdate.split('-').reverse().join('-');
+            el.end = el.workenddate.split('-').reverse().join('-');
           })
           this.Events = response
+          console.log(this.Events)
         }
 
       },
@@ -70,6 +84,23 @@ export class CalendarComponent implements OnInit {
         this.http.exceptionHandling(error);
       }
     )
+  }
+
+  getEventStatus(data: any){
+    let status = '';
+    if(data.status == 0){
+      status = 'Rejected';
+    }
+    else if(data.status == 1){
+      status = 'Pending';
+    }
+    else if(data.status == 2){
+      status = 'Inprogress';
+    }
+    else if(data.status == 3){
+      status = 'Completed';
+    }
+    return status;
   }
 
 }
