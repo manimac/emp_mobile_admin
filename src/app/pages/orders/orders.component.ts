@@ -22,6 +22,7 @@ export class OrdersComponent implements OnInit {
   selectedOrder: any = {};
   userDetails: any = {};
   range: any;
+  transportrange: any;
   orderFormGroup: FormGroup = new FormGroup({
     type: new FormControl('staffing', Validators.required),
     title: new FormControl('', Validators.required),
@@ -65,6 +66,12 @@ export class OrdersComponent implements OnInit {
     let startdate = this.selectedOrder.workstartdate.split("-").reverse().join("-");
     let enddate = this.selectedOrder.workenddate.split("-").reverse().join("-");
     this.range = new DateRange(new Date(startdate), new Date(enddate));
+    let loadingdate = this.selectedOrder.loadingdate && this.selectedOrder.loadingdate.split("-").reverse().join("-");
+    let unloadingdate = this.selectedOrder.unloadingdate && this.selectedOrder.unloadingdate.split("-").reverse().join("-");
+    if(loadingdate && unloadingdate) 
+      this.transportrange = new DateRange(new Date(loadingdate), new Date(unloadingdate));
+    else 
+      this.transportrange = new DateRange(new Date(), new Date());
   }
 
   ngOnInit(): void {
@@ -92,11 +99,32 @@ export class OrdersComponent implements OnInit {
     }
     this.orderFormGroup.patchValue(obj);
   }
-  
+
+  onTransportRangeChange(event: any) {
+    const selectedDate: Date = event;
+
+    if (!this.transportrange.start) {
+      // If start date is not set, set it
+      this.transportrange.start = selectedDate;
+    } else if (!this.transportrange.end) {
+      // If end date is not set, set it
+      this.transportrange.end = selectedDate;
+    } else {
+      // Both start and end dates are set, reset the range
+      this.transportrange = { start: selectedDate, end: null };
+    }
+    this.transportrange = new DateRange(this.transportrange.start, this.transportrange.end);
+    let obj = {
+      loadingdate: this.transportrange.start ? this.formatWorkDate(this.transportrange.start) : null,
+      unloadingdate: this.transportrange.end ? this.formatWorkDate(this.transportrange.end) : null
+    }
+    this.orderFormGroup.patchValue(obj);
+  }
+
   formatWorkDate(today: any) {
     const yyyy = today.getFullYear();
-    let mm:any = today.getMonth() + 1; // Months start at 0!
-    let dd:any = today.getDate();
+    let mm: any = today.getMonth() + 1; // Months start at 0!
+    let dd: any = today.getDate();
 
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
@@ -105,12 +133,12 @@ export class OrdersComponent implements OnInit {
 
   }
 
-  loadCategoryData(){
+  loadCategoryData() {
     this.http.post('category/get', {}).subscribe(
-      (response: any)=>{
+      (response: any) => {
         this.categoryLists = response;
       },
-      (error: any)=>{
+      (error: any) => {
         this.http.exceptionHandling(error);
       }
     )
@@ -187,28 +215,28 @@ export class OrdersComponent implements OnInit {
 
   delete(id: any) {
     this.http.delete('order/staff-transport-request/delete/', id).subscribe(
-      (response: any)=>{
-        this.http.successMessage('Deleted');      
+      (response: any) => {
+        this.http.successMessage('Deleted');
         this.showDetails = false;
         this.orderFormGroup.reset();
         this.selectedOrder = {};
         this.loadData();
       },
-      (error: any)=>{
+      (error: any) => {
         this.http.exceptionHandling(error);
       }
     )
   }
 
-  getStatus(data: any){
+  getStatus(data: any) {
     let status = '';
-    if(data.status == 1){
+    if (data.status == 1) {
       status = 'Not Started';
     }
-    else if(data.status == 2){
+    else if (data.status == 2) {
       status = 'Inprogress';
     }
-    else if(data.status == 3){
+    else if (data.status == 3) {
       status = 'Completed';
     }
     return status;

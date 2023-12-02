@@ -16,6 +16,7 @@ export class PlaceOrdersComponent implements OnInit {
   startDate: Date | undefined;
   endDate: Date | undefined;
   range: any;
+  transportrange: any;
   orderFormGroup: FormGroup = new FormGroup({
     type: new FormControl('staffing', Validators.required),
     title: new FormControl('', Validators.required),
@@ -60,6 +61,7 @@ export class PlaceOrdersComponent implements OnInit {
 
   refreshDR() {
     this.range = new DateRange(new Date(), new Date());
+    this.transportrange = new DateRange(new Date(), new Date());
   }
 
   ngOnInit(): void {
@@ -67,8 +69,8 @@ export class PlaceOrdersComponent implements OnInit {
 
   formatWorkDate(today: any) {
     const yyyy = today.getFullYear();
-    let mm:any = today.getMonth() + 1; // Months start at 0!
-    let dd:any = today.getDate();
+    let mm: any = today.getMonth() + 1; // Months start at 0!
+    let dd: any = today.getDate();
 
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
@@ -94,6 +96,27 @@ export class PlaceOrdersComponent implements OnInit {
     let obj = {
       workstartdate: this.range.start ? this.formatWorkDate(this.range.start) : null,
       workenddate: this.range.end ? this.formatWorkDate(this.range.end) : null
+    }
+    this.orderFormGroup.patchValue(obj);
+  }
+
+  onTransportRangeChange(event: any) {
+    const selectedDate: Date = event;
+
+    if (!this.transportrange.start) {
+      // If start date is not set, set it
+      this.transportrange.start = selectedDate;
+    } else if (!this.transportrange.end) {
+      // If end date is not set, set it
+      this.transportrange.end = selectedDate;
+    } else {
+      // Both start and end dates are set, reset the range
+      this.transportrange = { start: selectedDate, end: null };
+    }
+    this.transportrange = new DateRange(this.transportrange.start, this.transportrange.end);
+    let obj = {
+      loadingdate: this.transportrange.start ? this.formatWorkDate(this.transportrange.start) : null,
+      unloadingdate: this.transportrange.end ? this.formatWorkDate(this.transportrange.end) : null
     }
     this.orderFormGroup.patchValue(obj);
   }
