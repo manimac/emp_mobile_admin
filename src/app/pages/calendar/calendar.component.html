@@ -1,23 +1,23 @@
 <div class="content-wrapper" #form>
     <div class="page-header">
-      <h3 class="page-title"> Calendar </h3>
+        <h3 class="page-title"> Calendar </h3>
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <full-calendar [options]="calendarOptions"></full-calendar>
-              </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <full-calendar [options]="calendarOptions"></full-calendar>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-xl">
 
         <!-- Modal content-->
@@ -30,86 +30,150 @@
             </div>
             <div class="modal-body jezsel-profile-myord-pp">
                 <div class="container profile-popup-content table-responsive pb-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Title</label>
-                            <div>{{selectedEventTitle}}</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <div>{{selectedEventTitle}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <div>{{selectedEvent.description}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <div>{{selectedEvent.Category?.title}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Function</label>
+                                <div>{{selectedEvent.function}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Cancel Period</label>
+                                <div>{{selectedEvent.cancelperiod}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Work date</label>
+                                <div>{{selectedEvent.workstartdate}} {{selectedEvent.worktime}} -
+                                    {{selectedEvent.workenddate}} {{selectedEvent.worktime}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Break</label>
+                                <div>{{selectedEvent.fromtime}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Contact Person</label>
+                                <div>{{selectedEvent.contact}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Rate</label>
+                                <div>{{selectedEvent.rate}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Time Controller</label>
+                                <div>{{selectedEvent.timecontroller}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Freelancers / Temporary worker</label>
+                                <div>{{selectedEvent.worktype}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Staff Needed</label>
+                                <div>{{selectedEvent.staffneeded}}</div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="selectedEvent.type == 'transport'">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>From</label>
+                                    <div>{{selectedEvent.from}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>To</label>
+                                    <div>{{selectedEvent.to}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Loading/Unloading date</label>
+                                    <div>{{selectedEvent.loadingdate}} -
+                                        {{selectedEvent.unloadingdate}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Type Of Goods</label>
+                                    <div>{{selectedEvent.typeofgoods}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Weight</label>
+                                    <div>{{selectedEvent.weight}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Length</label>
+                                    <div>{{selectedEvent.length}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Type Of Vehicle</label>
+                                    <div>{{selectedEvent.vechicletype}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Packaging</label>
+                                    <div>{{selectedEvent.packaging}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Certificate</label>
+                                    <div>{{selectedEvent.certificate}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Equipment</label>
+                                    <div>{{selectedEvent.equipment}}</div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div [innerHtml]="getEventStatus(selectedEvent)">{{selectedEvent.staffneeded}}</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Description</label>
-                            <div>{{selectedEvent.description}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Category</label>
-                            <div>{{selectedEvent.Category?.title}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Function</label>
-                            <div>{{selectedEvent.function}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Cancel Period</label>
-                            <div>{{selectedEvent.cancelperiod}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Work date</label>
-                            <div>{{selectedEvent.workstartdate}} {{selectedEvent.worktime}} - {{selectedEvent.workenddate}} {{selectedEvent.worktime}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Break</label>
-                            <div>{{selectedEvent.fromtime}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Contact Person</label>
-                            <div>{{selectedEvent.contact}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Rate</label>
-                            <div>{{selectedEvent.rate}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Time Controller</label>
-                            <div>{{selectedEvent.timecontroller}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Freelancers / Temporary worker</label>
-                            <div>{{selectedEvent.worktype}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Staff Needed</label>
-                            <div>{{selectedEvent.staffneeded}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                          <label>Status</label>
-                          <div [innerHtml]="getEventStatus(selectedEvent)">{{selectedEvent.staffneeded}}</div>
-                      </div>
-                  </div>
-                </div>
                 </div>
             </div>
             <div class="modal-footer">

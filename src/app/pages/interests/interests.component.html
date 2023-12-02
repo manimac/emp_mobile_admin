@@ -94,6 +94,70 @@
                                         <div>{{selectedOrder.staffOrTransportRequest.staffneeded}}</div>
                                     </div>
                                 </div>
+
+                                <ng-container *ngIf="selectedOrder.staffOrTransportRequest.type == 'transport'">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.from}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.to}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Loading/Unloading date</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.loadingdate}} -
+                                                {{selectedOrder.staffOrTransportRequest.unloadingdate}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Type Of Goods</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.typeofgoods}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Weight</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.weight}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Length</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.length}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Type Of Vehicle</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.vechicletype}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Packaging</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.packaging}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Certificate</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.certificate}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Equipment</label>
+                                            <div>{{selectedOrder.staffOrTransportRequest.equipment}}</div>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </div>
 
                             <h4>Employee Details</h4>
