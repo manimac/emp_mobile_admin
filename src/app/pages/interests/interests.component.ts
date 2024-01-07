@@ -31,25 +31,32 @@ export class InterestsComponent implements OnInit {
   }
 
   loadData() {
-    let params = {
+    this.cancel();
+    let params: any = {
       // status: 1
     }
-    let url = '';
+    let url = 'staff-transport-request/statusFilter';
     if(this.selectedInterest == 'Pending'){
-      url = 'pendingStaffOrTransportInterest';
+      params.status = 1;
     }
     else if(this.selectedInterest == 'Inprogress'){
-      url = 'inprogressStaffOrTransportInterest';
+      params.status = 2;
     }
     else if(this.selectedInterest == 'Completed'){
-      url = 'completedStaffOrTransportInterest';
+      params.status = 3;
     }
     else {
-      url = 'rejectedStaffOrTransportInterest';
+      params.status = 0;
     }
     this.http.post(url, params).subscribe(
       (response: any) => {
-        this.dataLists = response
+        this.dataLists = response;
+        if (Array.isArray(this.dataLists) && this.dataLists.length > 0) {
+          this.dataLists.forEach((element) => {
+              element?.staffOrTransportRequest?.staffOrTransportWorkingHistories?.sort((a: any, b: any) => a.id - b.id);
+          });
+      }
+      
       },
       (error: any) => {
         this.http.exceptionHandling(error);
@@ -85,7 +92,7 @@ export class InterestsComponent implements OnInit {
       employee_id: this.selectedOrder.Employee.id,
       order: this.selectedOrder.staffOrTransportRequest
     }
-    this.http.post('assignmentUpdate', params).subscribe(
+    this.http.post('staff-transport-request/assignmentUpdate', params).subscribe(
       (response: any) => {
         if (response) {
           this.http.successMessage('Assignment Updated');
@@ -95,7 +102,7 @@ export class InterestsComponent implements OnInit {
         }
       }, error => {
         console.log(error);
-        this.http.errorMessage('Error submitting form');
+        this.http.exceptionHandling(error);
         // Handle the error
       });
   }

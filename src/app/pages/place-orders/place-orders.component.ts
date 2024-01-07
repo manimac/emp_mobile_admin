@@ -46,6 +46,7 @@ export class PlaceOrdersComponent implements OnInit {
     certificate: new FormControl(''),
     equipment: new FormControl(''),
     staffneeded: new FormControl(''),
+    staffaccepted: new FormControl('0'),
     timecontroller: new FormControl(''),
     category_id: new FormControl(''),
     image: new FormControl(''),
@@ -171,7 +172,7 @@ export class PlaceOrdersComponent implements OnInit {
     keys.forEach((key) => {
       formData.append(key, this.orderFormGroup.controls[key].value);
     });
-    this.http.post('order/staff-transport-request/create', formData).subscribe(
+    this.http.post('staff-transport-request/create', formData).subscribe(
       (response: any) => {
         if (response) {
           this.http.successMessage('Order Placed');

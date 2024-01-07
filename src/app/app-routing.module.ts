@@ -25,7 +25,7 @@ import { AdvertisementComponent } from './pages/advertisement/advertisement.comp
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { CertificateComponent } from './pages/certificate/certificate.component';
 import { SpecificationComponent } from './pages/specification/specification.component';
-import { OrdersComponent } from './pages/orders/orders.component';
+import { AssignmentsComponent } from './pages/assignments/assignments.component';
 import { PlaceOrdersComponent } from './pages/place-orders/place-orders.component';
 import { InterestsComponent } from './pages/interests/interests.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -36,7 +36,7 @@ import { InvoiceComponent } from './pages/invoice/invoice.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/assignments', pathMatch: 'full' },
-  { path: 'assignments', component: OrdersComponent, canActivate: [AuthGuardService] },
+  { path: 'assignments', component: AssignmentsComponent, canActivate: [AuthGuardService] },
   { path: 'place-order', component: PlaceOrdersComponent, canActivate: [AuthGuardService] },
   { path: 'company-profile', component: CompanyProfileComponent, canActivate: [AuthGuardService] },
   { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuardService] },

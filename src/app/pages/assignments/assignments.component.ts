@@ -6,11 +6,11 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DateRange, MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER } from '@angular/material/datepicker';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css']
+  selector: 'app-assignments',
+  templateUrl: './assignments.component.html',
+  styleUrls: ['./assignments.component.css']
 })
-export class OrdersComponent implements OnInit {
+export class AssignmentsComponent implements OnInit {
 
   dataLists: any = [];
   categoryLists: any = [];
@@ -52,6 +52,7 @@ export class OrdersComponent implements OnInit {
     certificate: new FormControl(''),
     equipment: new FormControl(''),
     staffneeded: new FormControl(''),
+    staffaccepted: new FormControl(''),
     timecontroller: new FormControl(''),
     category_id: new FormControl(''),
     image: new FormControl(''),
@@ -148,9 +149,13 @@ export class OrdersComponent implements OnInit {
     let params = {
       // status: 1
     }
-    this.http.post('order/staff-transport-requests', params).subscribe(
+    this.http.post('staff-transport-request/get', params).subscribe(
       (response: any) => {
         this.dataLists = response
+        this.dataLists.forEach((element: any)=>{
+          element.staffaccepted = parseInt(element.staffaccepted);
+          element.staffneeded = parseInt(element.staffneeded);
+        })
       },
       (error: any) => {
         this.http.exceptionHandling(error);
@@ -186,35 +191,41 @@ export class OrdersComponent implements OnInit {
   }
 
   submitOrder() {
-    let product = this.orderFormGroup.value;
-    product.search = {}
-    product.search.checkoutdate = this.orderFormGroup.value.workdate;
-    product.search.checkouttime = this.orderFormGroup.value.worktime;
-    let obj = { employer_id: this.userDetails.id };
-    this.orderFormGroup.patchValue(obj);
-    const formData = new FormData();
-    let keys = Object.keys(this.orderFormGroup.value);
-    keys.forEach((key) => {
-      formData.append(key, this.orderFormGroup.controls[key].value);
-    });
-    this.http.post('order/staff-transport-request/update', formData).subscribe(
-      (response: any) => {
-        if (response) {
-          this.http.successMessage('Order Updated');
-          this.loadData();
-          this.orderFormGroup.reset();
-          this.selectedOrder = {};
-          this.showDetails = false;
-        }
-      }, error => {
-        console.log(error);
-        this.http.errorMessage('Error submitting form');
-        // Handle the error
+    if(parseInt(this.orderFormGroup.value.staffneeded) < parseInt(this.orderFormGroup.value.staffaccepted)){
+      this.http.errorMessage('Already ' + this.orderFormGroup.value.staffaccepted + ' staff accepted');
+    }
+    else{
+      let product = this.orderFormGroup.value;
+      product.search = {}
+      product.search.checkoutdate = this.orderFormGroup.value.workdate;
+      product.search.checkouttime = this.orderFormGroup.value.worktime;
+      let obj = { employer_id: this.userDetails.id };
+      this.orderFormGroup.patchValue(obj);
+      const formData = new FormData();
+      let keys = Object.keys(this.orderFormGroup.value);
+      keys.forEach((key) => {
+        formData.append(key, this.orderFormGroup.controls[key].value);
       });
+      this.http.post('staff-transport-request/update', formData).subscribe(
+        (response: any) => {
+          if (response) {
+            this.http.successMessage('Order Updated');
+            this.loadData();
+            this.orderFormGroup.reset();
+            this.selectedOrder = {};
+            this.showDetails = false;
+          }
+        }, error => {
+          console.log(error);
+          this.http.errorMessage('Error submitting form');
+          // Handle the error
+        });
+    }
+    
   }
 
   delete(id: any) {
-    this.http.delete('order/staff-transport-request/delete/', id).subscribe(
+    this.http.delete('staff-transport-request/delete/', id).subscribe(
       (response: any) => {
         this.http.successMessage('Deleted');
         this.showDetails = false;

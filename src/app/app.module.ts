@@ -37,7 +37,7 @@ import { CouponsComponent } from './pages/coupons/coupons.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { CertificateComponent } from './pages/certificate/certificate.component';
 import { SpecificationComponent } from './pages/specification/specification.component';
-import { OrdersComponent } from './pages/orders/orders.component';
+import { AssignmentsComponent } from './pages/assignments/assignments.component';
 import { PlaceOrdersComponent } from './pages/place-orders/place-orders.component';
 import { InterestsComponent } from './pages/interests/interests.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -85,7 +85,7 @@ import { InvoiceComponent } from './pages/invoice/invoice.component';
     UserDetailComponent,
     CertificateComponent,
     SpecificationComponent,
-    OrdersComponent,
+    AssignmentsComponent,
     PlaceOrdersComponent,
     InterestsComponent,
     RegisterComponent,

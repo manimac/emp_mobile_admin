@@ -238,6 +238,9 @@
                                                 <td>{{i+1}}</td>
                                                 <td>{{desc.experience}}</td>
                                             </tr>
+                                            <tr *ngIf="selectedOrder.Employee.EmployeeExperiences.length==0">
+                                                <td colspan="2" class="text-center">No Records found</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -245,8 +248,7 @@
                                     <div class="form-group">
                                         <label>Assignment Status</label>
                                         <select class="form-control" [(ngModel)]="assignmentStatus">
-                                            <option value="" disabled>Select</option>
-                                            <option value="1">Pending</option>
+                                            <option value="1" disabled>Select</option>
                                             <option value="2">Accept(Inprogress)</option>
                                             <option value="3">Completed</option>
                                             <option value="0">Reject</option>
@@ -271,7 +273,7 @@
                                                 <td>{{history.hoursWorked}}</td>
                                                 <td>{{history.breakhours}}</td>
                                             </tr>
-                                            <tr *ngIf="dataLists.length==0">
+                                            <tr *ngIf="selectedOrder.staffOrTransportRequest?.staffOrTransportWorkingHistories.length==0">
                                                 <td colspan="6" class="text-center">No records found</td>
                                             </tr>
                                         </tbody>
