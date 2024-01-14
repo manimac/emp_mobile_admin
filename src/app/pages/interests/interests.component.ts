@@ -107,6 +107,17 @@ export class InterestsComponent implements OnInit {
       });
   }
 
+  statusUpdate(data: any) {
+    this.http.post('hoursSingleUpdate', data).subscribe(
+      (response: any) => {
+        
+      }, error => {
+        console.log(error);
+        this.http.exceptionHandling(error);
+        // Handle the error
+      });
+  }
+
   delete(id: any) {
     // this.http.delete('order/staff-transport-request/delete/', id).subscribe(
     //   (response: any)=>{

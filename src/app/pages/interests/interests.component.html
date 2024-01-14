@@ -264,6 +264,7 @@
                                                 <th> Date</th>
                                                 <th> Hours Worked </th>
                                                 <th> Break Hours </th>
+                                                <th> Status </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -272,6 +273,13 @@
                                                 <td>{{history.date | date: 'dd-MM-yyyy'}}</td>
                                                 <td>{{history.hoursWorked}}</td>
                                                 <td>{{history.breakhours}}</td>
+                                                <td>
+                                                    <select class="form-control" [(ngModel)]="history.status" (change)="statusUpdate(history)">
+                                                        <option value="0">Pending</option>
+                                                        <option value="1">Rejected</option>
+                                                        <option value="2">Completed</option>
+                                                    </select>
+                                                </td>
                                             </tr>
                                             <tr *ngIf="selectedOrder.staffOrTransportRequest?.staffOrTransportWorkingHistories.length==0">
                                                 <td colspan="6" class="text-center">No records found</td>
