@@ -1,3 +1,39 @@
 label{
     font-weight: bold;
 }
+
+.japp-search-rstlt .drop ul {
+	position: relative;
+	padding: 0px 0px;
+	/* background-color: #ff0000; */
+	display: block;
+	width: 100%;
+	list-style-type: none;
+	z-index: 9;
+	font-size: 16px;
+	color: #000;
+    border: 1px solid #80bdff;
+    border-top: none;
+	/* background-color: var(--lightblack); */
+	/* border-radius: 10px; */
+	/* border-top-left-radius: 0px; */
+	/* border-top-right-radius: 0px; */
+}
+.japp-search-rstlt .drop ul li { padding: 12px 0px;}
+.japp-search-rstlt .drop ul li a {
+	display: grid;
+	grid-template-columns: 20px 1fr;
+	width: 100%;
+	font-size: 12px;
+	grid-gap: 6px;
+}
+.japp-search-rstlt .drop ul li.active {   background: var(--primary); color: #fff;}
+.japp-db-tab-frm label {
+	position: absolute;
+	top: -8px;
+	left: 10px;
+	background-color: #fff;
+	color: var(--primary);
+	font-size: 13px;
+	padding: 0px 5px;
+}

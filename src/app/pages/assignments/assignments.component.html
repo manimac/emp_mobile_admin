@@ -251,6 +251,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Stad</label>
+                                            <input class="form-control" type="text" placeholder="Stad" (keyup)="searchLocation()" formControlName="locationaddress" id="locationelement" autocomplete="off">
+                                            <div class="japp-search-rstlt">
+                                                <div class="drop ">
+                                                  <ul *ngIf="showSelectLocation">
+                                                    <li *ngFor="let loc of locations" (click)="selectedLocation(loc)"><a><img src="assets/images/location.svg" class="frm-date-icon"> {{loc?.description}}</a></li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-gradient-primary"
                                     [disabled]="orderFormGroup.invalid">

@@ -56,11 +56,17 @@ export class AssignmentsComponent implements OnInit {
     timecontroller: new FormControl(''),
     category_id: new FormControl(''),
     image: new FormControl(''),
+    locationaddress: new FormControl(''),
+    lat: new FormControl(''),
+    lng: new FormControl(''),
     status: new FormControl('1'),
     id: new FormControl('', Validators.required),
   });
+  public locations: any = [];
+  showSelectLocation: boolean = false;
   constructor(private http: HttpRequestService, private router: Router, private storage: StorageService) {
     this.userDetails = this.storage.getUserDetails();
+    this.searchLocation();
   }
 
   refreshDR() {
@@ -251,6 +257,51 @@ export class AssignmentsComponent implements OnInit {
       status = 'Completed';
     }
     return status;
+  }
+
+  searchLocation() {
+    if (this.orderFormGroup.value.locationaddress.length > 2) {
+      this.showSelectLocation = true;
+      this.http.post('mapautocomplete', { input: this.orderFormGroup.value.locationaddress })
+        .subscribe((response: any) => {
+          if (response.body) {
+            response.body = JSON.parse(response.body);
+            this.locations = response.body.predictions;
+          }
+
+        });
+    }
+    else {
+      this.showSelectLocation = false;
+    }
+  }
+
+  selectedLocation(loc: any) {
+    this.showSelectLocation = false;
+    let obj = {
+      locationaddress: loc?.description
+    }
+    this.orderFormGroup.patchValue(obj);
+    this.http.post('getPlaceById', { input: loc.place_id })
+      .subscribe((response: any) => {
+        if (response.body) {
+          response.body = JSON.parse(response.body);
+          if (response.body.result && response.body.result.geometry) {
+            let location = response.body.result.geometry.location;
+            if (location) {
+              let lat = location.lat;
+              let lng = location.lng;
+              // let distance = this.haversineDistance(lat, lng, '51.583008', '4.745676');
+              let obj = {
+                lat: lat,
+                lng: lng,
+              };
+              console.log(obj)
+              this.orderFormGroup.patchValue(obj);
+            }
+          }
+        }
+      });
   }
 
 }

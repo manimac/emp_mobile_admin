@@ -5,6 +5,7 @@ import { types } from 'src/app/models/vehicleTypes';
 import { HttpRequestService } from 'src/app/services/http-request/http-request.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DateRange, MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER } from '@angular/material/datepicker';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-place-orders',
   templateUrl: './place-orders.component.html',
@@ -50,14 +51,20 @@ export class PlaceOrdersComponent implements OnInit {
     timecontroller: new FormControl(''),
     category_id: new FormControl(''),
     image: new FormControl(''),
+    locationaddress: new FormControl(''),
+    lat: new FormControl(''),
+    lng: new FormControl(''),
     status: new FormControl('1'),
   });
   userDetails: any = {};
   categoryLists: any = [];
+  public locations: any = [];
+  showSelectLocation: boolean = false;
   constructor(private http: HttpRequestService, private storage: StorageService, private router: Router) {
     this.userDetails = this.storage.getUserDetails();
     this.loadData();
     this.refreshDR();
+    this.searchLocation();
   }
 
   refreshDR() {
@@ -188,6 +195,51 @@ export class PlaceOrdersComponent implements OnInit {
 
   cancel() {
     this.orderFormGroup.reset();
+  }
+
+  searchLocation() {
+    if (this.orderFormGroup.value.locationaddress.length > 2) {
+      this.showSelectLocation = true;
+      this.http.post('mapautocomplete', { input: this.orderFormGroup.value.locationaddress })
+        .subscribe((response: any) => {
+          if (response.body) {
+            response.body = JSON.parse(response.body);
+            this.locations = response.body.predictions;
+          }
+
+        });
+    }
+    else {
+      this.showSelectLocation = false;
+    }
+  }
+
+  selectedLocation(loc: any) {
+    this.showSelectLocation = false;
+    let obj = {
+      locationaddress: loc?.description
+    }
+    this.orderFormGroup.patchValue(obj);
+    this.http.post('getPlaceById', { input: loc.place_id })
+      .subscribe((response: any) => {
+        if (response.body) {
+          response.body = JSON.parse(response.body);
+          if (response.body.result && response.body.result.geometry) {
+            let location = response.body.result.geometry.location;
+            if (location) {
+              let lat = location.lat;
+              let lng = location.lng;
+              // let distance = this.haversineDistance(lat, lng, '51.583008', '4.745676');
+              let obj = {
+                lat: lat,
+                lng: lng,
+              };
+              console.log(obj)
+              this.orderFormGroup.patchValue(obj);
+            }
+          }
+        }
+      });
   }
 
 }
