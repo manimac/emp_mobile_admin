@@ -30,16 +30,15 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Description</label>
-                                            <textarea class="form-control" placeholder="Description"
-                                                formControlName="description">
-                                          </textarea>
+                                            <ckeditor placeholder="Enter Description" formControlName="description">
+                                            </ckeditor>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Industry</label>
                                             <select class="form-control" placeholder="Category"
-                                                formControlName="category_id">
+                                                formControlName="category_id" (change)="changeCategory()">
                                                 <option value="" disabled>Select</option>
                                                 <option value="{{data.id}}" *ngFor="let data of categoryLists">
                                                     {{data.title}}</option>
@@ -50,11 +49,10 @@
                                         <div class="form-group">
                                             <label>Function</label>
                                             <select class="form-control" placeholder="Function"
-                                                formControlName="function">
-                                                <option value="">Select</option>
-                                                <option value="option 1">option 1</option>
-                                                <option value="option 2">option 2</option>
-                                                <option value="option 3">option 3</option>
+                                                formControlName="function_id">
+                                                <option value="" disabled>Select</option>
+                                                <option value="{{data.id}}" *ngFor="let data of functionsLists|functionFilter:orderFormGroup.value.category_id">
+                                                    {{data.title}}</option>
                                             </select>
                                         </div>
                                     </div>

@@ -49,6 +49,7 @@ import { CalendarComponent } from './pages/calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { MatTabsModule } from '@angular/material/tabs';
 import { InvoiceComponent } from './pages/invoice/invoice.component';
+import { FunctionFilterPipe } from './pipes/function-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { InvoiceComponent } from './pages/invoice/invoice.component';
     CategoriesComponent,
     CompanyProfileComponent,
     CalendarComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    FunctionFilterPipe
   ],
   imports: [
     BrowserModule,

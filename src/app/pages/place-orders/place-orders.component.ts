@@ -23,7 +23,7 @@ export class PlaceOrdersComponent implements OnInit {
     title: new FormControl('', Validators.required),
     description: new FormControl(''),
     industry: new FormControl(''),
-    function: new FormControl(''),
+    function_id: new FormControl(''),
     cancelperiod: new FormControl(''),
     workstartdate: new FormControl(''),
     workenddate: new FormControl(''),
@@ -58,6 +58,7 @@ export class PlaceOrdersComponent implements OnInit {
   });
   userDetails: any = {};
   categoryLists: any = [];
+  functionsLists: any = [];
   public locations: any = [];
   showSelectLocation: boolean = false;
   constructor(private http: HttpRequestService, private storage: StorageService, private router: Router) {
@@ -133,6 +134,14 @@ export class PlaceOrdersComponent implements OnInit {
     this.http.post('category/get', {}).subscribe(
       (response: any) => {
         this.categoryLists = response;
+      },
+      (error: any) => {
+        this.http.exceptionHandling(error);
+      }
+    )
+    this.http.post('functions/get', {}).subscribe(
+      (response: any) => {
+        this.functionsLists = response;
       },
       (error: any) => {
         this.http.exceptionHandling(error);
@@ -240,6 +249,10 @@ export class PlaceOrdersComponent implements OnInit {
           }
         }
       });
+  }
+
+  changeCategory(){
+    this.orderFormGroup.patchValue({function_id: ''})
   }
 
 }

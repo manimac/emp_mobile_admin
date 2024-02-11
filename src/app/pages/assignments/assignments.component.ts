@@ -14,6 +14,7 @@ export class AssignmentsComponent implements OnInit {
 
   dataLists: any = [];
   categoryLists: any = [];
+  functionsLists: any = [];
   showDetails: boolean = false;
   selectedProduct: any = {};
   selectedUser: any = {};
@@ -28,7 +29,7 @@ export class AssignmentsComponent implements OnInit {
     title: new FormControl('', Validators.required),
     description: new FormControl(''),
     industry: new FormControl(''),
-    function: new FormControl(''),
+    function_id: new FormControl(''),
     cancelperiod: new FormControl(''),
     workstartdate: new FormControl(''),
     workenddate: new FormControl(''),
@@ -144,6 +145,14 @@ export class AssignmentsComponent implements OnInit {
     this.http.post('category/get', {}).subscribe(
       (response: any) => {
         this.categoryLists = response;
+      },
+      (error: any) => {
+        this.http.exceptionHandling(error);
+      }
+    )    
+    this.http.post('functions/get', {}).subscribe(
+      (response: any) => {
+        this.functionsLists = response;
       },
       (error: any) => {
         this.http.exceptionHandling(error);
@@ -302,6 +311,10 @@ export class AssignmentsComponent implements OnInit {
           }
         }
       });
+  }
+
+  changeCategory(){
+    this.orderFormGroup.patchValue({function_id: ''})
   }
 
 }
