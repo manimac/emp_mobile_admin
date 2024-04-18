@@ -210,6 +210,10 @@ export class AssignmentsComponent implements OnInit {
       this.http.errorMessage('Already ' + this.orderFormGroup.value.staffaccepted + ' staff accepted');
     }
     else{
+      let workstartdate = this.orderFormGroup.value.workstartdate.split("-").reverse().join("-");
+      let workenddate = this.orderFormGroup.value.workenddate.split("-").reverse().join("-");
+      let obj1 = { workstartdate: workstartdate, workenddate: workenddate};
+      this.orderFormGroup.patchValue(obj1);
       let product = this.orderFormGroup.value;
       product.search = {}
       product.search.checkoutdate = this.orderFormGroup.value.workdate;
@@ -219,7 +223,9 @@ export class AssignmentsComponent implements OnInit {
       const formData = new FormData();
       let keys = Object.keys(this.orderFormGroup.value);
       keys.forEach((key) => {
-        formData.append(key, this.orderFormGroup.controls[key].value);
+        if(this.orderFormGroup.controls[key].value){
+          formData.append(key, this.orderFormGroup.controls[key].value);
+        }        
       });
       this.http.post('staff-transport-request/update', formData).subscribe(
         (response: any) => {

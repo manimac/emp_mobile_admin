@@ -175,8 +175,11 @@ export class PlaceOrdersComponent implements OnInit {
   }
 
   submitOrder() {
-    let obj1 = { workstartdate: this.formatDate(this.selected) };
-    console.log(obj1)
+    let workstartdate = this.orderFormGroup.value.workstartdate.split("-").reverse().join("-");
+    let workenddate = this.orderFormGroup.value.workenddate.split("-").reverse().join("-");
+    // let obj1 = { workstartdate: this.formatDate(this.selected) };
+    let obj1 = { workstartdate: workstartdate, workenddate: workenddate};
+    this.orderFormGroup.patchValue(obj1);
     let product = this.orderFormGroup.value;
     product.search = {}
     product.search.checkoutdate = this.orderFormGroup.value.workstartdate;
@@ -186,7 +189,9 @@ export class PlaceOrdersComponent implements OnInit {
     const formData = new FormData();
     let keys = Object.keys(this.orderFormGroup.value);
     keys.forEach((key) => {
-      formData.append(key, this.orderFormGroup.controls[key].value);
+      if(this.orderFormGroup.controls[key].value){
+        formData.append(key, this.orderFormGroup.controls[key].value);
+      }      
     });
     this.http.post('staff-transport-request/create', formData).subscribe(
       (response: any) => {
