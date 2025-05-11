@@ -10,7 +10,7 @@
                         <div class="card-body">
                             <form class="forms-sample" [formGroup]="formGroup" (ngSubmit)="save()">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <!-- <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Type</label>
                                             <select class="form-control" formControlName="type" (change)="showFilter()">
@@ -19,7 +19,20 @@
                                                 </option>
                                             </select>
                                         </div>
+                                    </div> -->
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Vehicle Type</label>
+                                            <select class="form-control" formControlName="vehicletype">
+                                                <option value="">Select Type</option>
+                                                <option value="car">Car</option>
+                                                <option value="van">Van</option>
+                                                <option value="truck">Truck</option>
+                                            </select>
+                                        </div>
                                     </div>
+
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Name</label>
@@ -62,8 +75,29 @@
                                                 formControlName="acceleration">
                                         </div>
                                     </div>
-
                                     <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>KM price for hours</label>
+                                            <input type="text" class="form-control" placeholder="KM price for hours"
+                                                formControlName="kmprice">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>KM limit for day</label>
+                                            <input type="text" class="form-control" placeholder="KM limit for day"
+                                                formControlName="kmlimit">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Additional km price</label>
+                                            <input type="text" class="form-control" placeholder="Additional km price"
+                                                formControlName="additionalkm">
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Location</label>
                                             <select class="form-control" formControlName="location_id">
@@ -73,7 +107,8 @@
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                    <div class="col-md-9"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Short Description</label>
@@ -265,7 +300,7 @@
                                             </option>
                                         </select>
                                         <br>
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered table-responsive">
                                             <tr>
                                                 <th>Selected Specifications</th>
                                                 <th>Action</th>
@@ -282,6 +317,100 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>QNR</label>
+                                            <input type="text" class="form-control" placeholder="QNR"
+                                                formControlName="qnr">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Latitude</label>
+                                            <input type="text" class="form-control" placeholder="Latitude"
+                                                formControlName="lat" (change)="updateAddress()">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Longitude</label>
+                                            <input type="text" class="form-control" placeholder="longitude"
+                                                formControlName="lng" (change)="updateAddress()">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <input type="text" class="form-control" placeholder="Address"
+                                                formControlName="location" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="btn btn-info" (click)="fetchLocation()">Fetch Location</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Fuel Type</label>
+                                            <select class="form-control" formControlName="fueltype">
+                                                <option value="">Select Fuel Type</option>
+                                                <option value="Petrol">Petrol</option>
+                                                <option value="Diesel">Diesel</option>
+                                                <option value="Gas">Gas</option>
+                                                <option value="Electric">Electric</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Fuel Capacity</label>
+                                            <input type="text" class="form-control" placeholder="Fuel Capacity"
+                                                formControlName="fuelcapacity">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="row mt-4">Damage Uploads</h3>
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Image 1</label>
+                                            <input type="file" class="form-control" #image1
+                                                (change)="onImage1Change(image1.files)">
+                                        </div>
+                                        <img [src]="selectedRow.path + selectedRow.image1" width="100"
+                                            *ngIf="selectedRow && selectedRow.image1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Image 2</label>
+                                            <input type="file" class="form-control" #image2
+                                                (change)="onImage2Change(image2.files)">
+                                        </div>
+                                        <img [src]="selectedRow.path + selectedRow.image2" width="100"
+                                            *ngIf="selectedRow && selectedRow.image2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Image 3</label>
+                                            <input type="file" class="form-control" #image3
+                                                (change)="onImage3Change(image3.files)">
+                                        </div>
+                                        <img [src]="selectedRow.path + selectedRow.image3" width="100"
+                                            *ngIf="selectedRow && selectedRow.image3">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Image 4</label>
+                                            <input type="file" class="form-control" #image4
+                                                (change)="onImage4Change(image4.files)">
+                                        </div>
+                                        <img [src]="selectedRow.path + selectedRow.image4" width="100"
+                                            *ngIf="selectedRow && selectedRow.image4">
+                                    </div>
+                                </div>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-gradient-primary mr-2"
@@ -289,6 +418,43 @@
                                         <button class="btn btn-light" (click)="cancel()">Cancel</button>
                                     </div>
                                 </div>
+                                <!-- <div class="row mt-4" *ngIf="checkOrder()"> 
+                                    <div class="col-md-12">
+                                        <h3>Orders</h3>
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <th>Checkin Date</th>
+                                                <th>Checkout Date</th>
+                                                <th>Before 1</th>
+                                                <th>Before 2</th>
+                                                <th>Before 3</th>
+                                                <th>Before 4</th>
+                                                <th>Before 5</th>
+                                                <th>After 1</th>
+                                                <th>After 2</th>
+                                                <th>After 3</th>
+                                                <th>After 4</th>
+                                                <th>After 5</th>
+                                            </thead>
+                                            <tbody class="screenshots">
+                                                <tr *ngFor="let order of selectedRow.Orderhistories">
+                                                    <td>{{order.checkindate|date:'medium'}}</td>
+                                                    <td>{{order.checkoutdate|date:'medium'}}</td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.initialimage1}}" *ngIf="order.screenshoot?.initialimage1"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.initialimage2}}" *ngIf="order.screenshoot?.initialimage2"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.initialimage3}}" *ngIf="order.screenshoot?.initialimage3"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.initialimage4}}" *ngIf="order.screenshoot?.initialimage4"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.additionstartimage}}" *ngIf="order.screenshoot?.additionstartimage"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.completedimage1}}" *ngIf="order.screenshoot?.completedimage1"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.completedimage2}}" *ngIf="order.screenshoot?.completedimage2"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.completedimage3}}" *ngIf="order.screenshoot?.completedimage3"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.completedimage4}}" *ngIf="order.screenshoot?.completedimage4"></td>
+                                                    <td><img src="{{order.screenshoot?.path}}{{order.screenshoot?.additionendimage}}" *ngIf="order.screenshoot?.additionendimage"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> -->
                             </form>
                         </div>
                     </div>
@@ -303,7 +469,7 @@
                             <button class="btn btn-primary pull-right" (click)="create(form)">Create</button>
                         </div>
                     </div>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-responsive">
                         <thead>
                             <tr>
                                 <th> # </th>
@@ -321,8 +487,7 @@
                                     <button class="btn btn-sm btn-default" (click)="viewElement(data, form)">
                                         <i class="fa fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-default" (click)="deleteElement(data.id)"
-                                        *ngIf="(isAdmin)||(userRole == 'All')">
+                                    <button class="btn btn-sm btn-default" (click)="deleteElement(data.id)">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>

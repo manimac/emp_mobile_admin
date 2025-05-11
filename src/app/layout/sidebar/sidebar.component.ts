@@ -25,6 +25,11 @@ export class SidebarComponent implements OnInit {
   loadNavigations(){
     this.navigations = [      
       {
+        label: 'Rent',
+        route: '/vehicles',
+        icon: 'mdi-cart'
+      },
+      {
         label: 'Place an Order',
         route: '/place-order',
         icon: 'mdi-cart'

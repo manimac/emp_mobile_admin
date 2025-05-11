@@ -21,6 +21,11 @@ export class HttpRequestService {
   get(url: any) {
     const headers = this.setHeaders();
     return this.http.get(this.baseUrl + url, { headers });
+  }  
+
+  getGoogleAddress(lat: any, long: any) {
+    const headers = this.setHeaders();
+    return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat +"," +long + "&sensor=true&key=AIzaSyDRzC2926nlZ0VOWTn9QbHrfbBCDtj8IR8");
   }
 
   post(url: any, body: any) {

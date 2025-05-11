@@ -14,14 +14,16 @@ export class VehiclesComponent implements OnInit {
   thumbImage: any;
   formGroup: FormGroup = new FormGroup({
     id: new FormControl(''),
-    type: new FormControl('', Validators.required),
+    type: new FormControl('Rent', Validators.required),
+    vehicletype: new FormControl(''),
     name: new FormControl('', Validators.required),
     priceperhr: new FormControl('', Validators.required),
     priceperday: new FormControl('', Validators.required),
     adavanceamountforday: new FormControl('', Validators.required),
     noofseats: new FormControl('', Validators.required),
     acceleration: new FormControl('', Validators.required),
-    location_id: new FormControl('', Validators.required),
+    location_id: new FormControl(''),
+    location: new FormControl(''),
     description: new FormControl('', Validators.required),
     shortdescription: new FormControl('', Validators.required),
     thumbnail: new FormControl('', Validators.required),
@@ -37,7 +39,19 @@ export class VehiclesComponent implements OnInit {
     nationality: new FormControl(''),
     voertuig: new FormControl(''),
     status: new FormControl(''),
-    availabledays: new FormControl('')
+    image1: new FormControl(''),
+    image2: new FormControl(''),
+    image3: new FormControl(''),
+    image4: new FormControl(''),
+    availabledays: new FormControl(''),
+    qnr: new FormControl('', Validators.required),
+    lat: new FormControl('', Validators.required),
+    lng: new FormControl('', Validators.required),
+    fueltype: new FormControl('', Validators.required),
+    fuelcapacity: new FormControl('', Validators.required),
+    kmprice: new FormControl('', Validators.required),
+    kmlimit: new FormControl('', Validators.required),
+    additionalkm: new FormControl('', Validators.required)
   })
   showForm: boolean = false;
   dataLists: any = [];
@@ -97,7 +111,7 @@ export class VehiclesComponent implements OnInit {
   }
 
   loadData() {
-    this.http.post('products', { fromadmin: 1 }).subscribe(
+    this.http.post('products', { fromadmin: 1, employer_id: this.userDetails.id }).subscribe(
       (response: any) => {
         this.dataLists = response && response.data;
       },
@@ -216,6 +230,26 @@ export class VehiclesComponent implements OnInit {
       thumbnail: file[0]
     });
   }
+  onImage1Change(file: any) {
+    this.formGroup.patchValue({
+      image1: file[0]
+    });
+  }
+  onImage2Change(file: any) {
+    this.formGroup.patchValue({
+      image2: file[0]
+    });
+  }
+  onImage3Change(file: any) {
+    this.formGroup.patchValue({
+      image3: file[0]
+    });
+  }
+  onImage4Change(file: any) {
+    this.formGroup.patchValue({
+      image4: file[0]
+    });
+  }
 
   onImageChange(event: any) {
     if (event.target.files.length > 0) {
@@ -229,21 +263,39 @@ export class VehiclesComponent implements OnInit {
   save() {
     let url = (this.formGroup.value.id) ? 'order/update' : 'order/create'
     let _form = new FormData();
-    _form.append('id', this.formGroup.value.id);
+    if(this.formGroup.value.id){
+      _form.append('id', this.formGroup.value.id);
+    }    
     _form.append('name', this.formGroup.value.name);
     let str = this.formGroup.value.name.replace(/\s+/g, '-').toLowerCase();
     _form.append('route', str);
     _form.append('type', this.formGroup.value.type);
     _form.append('priceperhr', this.formGroup.value.priceperhr);
     _form.append('adavanceamountforday', this.formGroup.value.adavanceamountforday);
+    _form.append('priceperday', this.formGroup.value.priceperday);
     _form.append('noofseats', this.formGroup.value.noofseats);
     _form.append('acceleration', this.formGroup.value.acceleration);
-    _form.append('location_id', this.formGroup.value.location_id);
+    // _form.append('location_id', this.formGroup.value.location_id);
+    _form.append('location', this.formGroup.value.location);
     _form.append('shortdescription', this.formGroup.value.shortdescription);
     _form.append('description', this.formGroup.value.description);
     _form.append('status', this.formGroup.value.status ? "1" : "0");
-    _form.append('showinindex', this.formGroup.value.showinindex);
+    _form.append('showinindex', "0");
     _form.append('thumbnail', this.formGroup.value.thumbnail);
+    _form.append('qnr', this.formGroup.value.qnr);
+    _form.append('lat', this.formGroup.value.lat);
+    _form.append('lng', this.formGroup.value.lng);
+    _form.append('vehicletype', this.formGroup.value.vehicletype);
+    _form.append('image1', this.formGroup.value.image1);
+    _form.append('image2', this.formGroup.value.image2);
+    _form.append('image3', this.formGroup.value.image3);
+    _form.append('image4', this.formGroup.value.image4);
+    _form.append('fueltype', this.formGroup.value.fueltype);
+    _form.append('fuelcapacity', this.formGroup.value.fuelcapacity);
+    _form.append('employer_id', this.userDetails.id);
+    _form.append('kmprice', this.formGroup.value.kmprice);
+    _form.append('kmlimit', this.formGroup.value.kmlimit);
+    _form.append('additionalkm', this.formGroup.value.additionalkm);
     if (this.formGroup.value.vehicle)
       _form.append('vehicle', this.formGroup.value.vehicle || null);
     if (this.formGroup.value.fuel)
@@ -286,6 +338,7 @@ export class VehiclesComponent implements OnInit {
         this.selectedSpecifications = [];
         this.formGroup.reset();
         this.loadData();
+        location.reload()
       },
       (error: any) => {
         this.http.exceptionHandling(error);
@@ -296,6 +349,70 @@ export class VehiclesComponent implements OnInit {
   cancel() {
     this.showForm = false;
     this.formGroup.reset();
+  }
+
+  fetchLocation(){
+    if(this.formGroup.value.qnr){
+      this.http.post("invers/getStatus", {qnr: this.formGroup.value.qnr}).subscribe(
+        (response: any) => {
+          if(response && response.body){
+            response.body = JSON.parse(response.body);
+            if(response.body && response.body.position){
+              this.http.getGoogleAddress(response.body.position.lat, response.body.position.lon).subscribe((element: any)=>{
+                let locations = '';
+                if (element && (element.results) && Array.isArray(element.results) && (element.results.length > 0)) {
+                  let currentAddress = element.results.find((element: any)=>(element.types && Array.isArray(element.types) && (element.types.length>0) && (element.types[0]=='street_address')))
+                  if(!currentAddress){
+                    currentAddress = element.results[0];
+                  }
+                  if(currentAddress){
+                    locations = currentAddress.formatted_address;
+                  }          
+                }
+                let obj = {
+                  lat: response.body.position.lat ? response.body.position.lat : '',
+                  lng: response.body.position.lon ? response.body.position.lon : '',
+                  location: locations
+                }
+                this.formGroup.patchValue(obj);
+              })
+              
+            }
+            console.log(response.body);
+          }
+          
+        },
+        (error: any) => {
+          this.http.exceptionHandling(error);
+        }
+      )
+    }
+    else{
+      this.http.errorMessage("Please enter QNR Code")
+    }
+    
+  }
+
+  updateAddress(){
+    this.http.getGoogleAddress(this.formGroup.value.lat, this.formGroup.value.lng).subscribe((element: any)=>{
+      if (element && (element.results) && Array.isArray(element.results) && (element.results.length > 0)) {
+        let currentAddress = element.results.find((element: any)=>(element.types && Array.isArray(element.types) && (element.types.length>0) && (element.types[0]=='street_address')))
+        if(!currentAddress){
+          currentAddress = element.results[0];
+        }
+        if(currentAddress){
+          let obj = {
+            location: currentAddress.formatted_address
+          }
+          this.formGroup.patchValue(obj);
+        }          
+      }
+      
+    })
+  }
+
+  checkOrder(){
+    return this.selectedRow && this.selectedRow.Orderhistories && Array.isArray(this.selectedRow.Orderhistories) && (this.selectedRow.Orderhistories.length>0)
   }
 
 }
